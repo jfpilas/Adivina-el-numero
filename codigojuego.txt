@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+//Escribo las funciones aqui
+void frases();
+int pista(int,int);
+
+int main(void) {
+  int numero_usuario;
+  srand(time(NULL));
+  int aleatorio=rand()%100+1;
+  int contador=0;
+  
+  // printf("%d",aleatorio);
+  printf("\n\t\t\tBienvenidos Jugador@s:\n");
+  printf("\n");
+  printf("Vamos a comenzar el juego de adivinar el numero que estoy pensando...\n");
+  printf("\n");
+  printf("------------------------------\n");
+  printf("\n");
+  printf("¡Comenzemos el juego! Es un numero entre 1 y 100.\n");
+  printf("\n");
+
+  printf("Ingresa el numero que creas que estoy pensando:\n");
+  do{
+    //El error de preguntarme dos veces y cogerme la ultima era pq tenia dos veces el scanf por eso lo he comentado.
+    // scanf("%d",&numero_usuario);
+
+    if (scanf("%d", &numero_usuario) != 1) {
+        printf("Ese no es un número válido, por favor ingresa un número.\n");
+        while (getchar() != '\n'); // Limpiar el buffer de entrada
+        continue;
+    }
+    
+    if(numero_usuario<1 || numero_usuario>100 ){
+      printf("Ese numero no es válido, el rango está entre 1 y 100.\n");
+    }else if(numero_usuario==aleatorio){
+      printf("¡Acertaste! El numero que había pensado era el %d",aleatorio);
+      
+    }else if(numero_usuario>1 || numero_usuario<100 || numero_usuario!=aleatorio){
+      frases();
+      contador++;
+      if(contador==3){
+        contador=0;
+        while(getchar()!='\n');
+        pista(numero_usuario,aleatorio);
+      }
+      printf("Dame otro numero:\n");
+    }
+
+    
+  }while(numero_usuario!=aleatorio);
+  
+
+
+return 0;
+}
+
+void frases(){
+char frases[7][100]={
+  "¡Tú puedes!\n",
+  "Jajaja ¿que pasa que no lo aciertas?\n",
+  "Vaya...aver si tienes más suerte\n",
+  "No das una eh...\n", 
+  "Ni de coña...\n",
+  "Eres malisimo adivinando...\n",
+  "Pringado!\n"
+};
+
+  int eleccion=rand()%7;
+  printf("%s",frases[eleccion]);
+  
+}
+
+int pista(int numero_usuario,int aleatorio){
+  char letra;
+  printf("Puedes elegir una pista si escribes una (x), en cualquier otro caso pulse otra letra.\n");
+scanf("%c",&letra);
+  if(letra=='x'){
+    if(numero_usuario>aleatorio){
+      printf("El numero que estoy pensando es más bajo\n");
+    }else if(numero_usuario<aleatorio){
+      printf("El numero que estoy pensando es más alto\n");
+    }
+  }else{
+    return 0;
+  }
+  
+  return 0;
+  
+}
